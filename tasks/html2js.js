@@ -52,7 +52,8 @@ module.exports = function(grunt) {
 
     var options = this.options({
       base: 'src',
-      module: 'templates-' + this.target
+      module: 'templates-' + this.target,
+      leadingSlash: false
     });
 
     // generate a separate module
@@ -64,7 +65,7 @@ module.exports = function(grunt) {
 
       var modules = f.src.filter(existsFilter).map(function(filepath) {
 
-        var moduleName = normalizePath(path.relative(options.base, filepath));
+        var moduleName = (options.leadingSlash ? '/' : '') + normalizePath(path.relative(options.base, filepath));
         moduleNames.push("'" + moduleName + "'");
 
         return compileTemplate(moduleName, filepath);
